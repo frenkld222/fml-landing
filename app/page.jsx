@@ -57,7 +57,7 @@ const BRAND = {
     {
       icon: Zap,
       title: "Easy Entry",
-      desc: "Sign up, choose a property, and invest within minutes — fully digital onboarding.",
+      desc: "Contact us, choose a property, and invest with us — fully responsable onboarding.",
     },
   ],
   stats: [
