@@ -67,7 +67,7 @@ const BRAND = {
     { label: "Avg. ROI", value: "6.5%" },
   ],
   howItWorks: [
-    { step: "1", title: "Sign up & verify", desc: "Create your account and complete verification in minutes." },
+    { step: "1", title: "Contact us", desc: "Submit your information and scedual a meeting in minutes." },
     { step: "2", title: "Select a property", desc: "Browse vetted houses and condos with full financial details." },
     { step: "3", title: "Invest & earn", desc: "Fund your share and receive regular income distributions." },
   ],
