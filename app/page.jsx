@@ -146,7 +146,7 @@ function Navbar({ mobileOpen, setMobileOpen }) {
     const el = document.querySelector(href);
     if (el) {
       e.preventDefault();
-      const headerOffset = 72;
+      const headerOffset = 80;
       const rect = el.getBoundingClientRect();
       const scrollTop = window.pageYOffset + rect.top - headerOffset;
       window.scrollTo({ top: scrollTop, behavior: "smooth" });
@@ -161,13 +161,13 @@ function Navbar({ mobileOpen, setMobileOpen }) {
           <div className="flex items-center gap-3">
             <div className="relative">
               <Image src="/logo.png" alt="FML Logo" width={40} height={40} className="rounded-xl" />
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-amber-400/30 to-amber-600/30 blur-md animate-pulse" />
+              <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-amber-400/30 to-amber-600/30 blur-md" />
             </div>
             <span className="font-bold text-xl bg-gradient-to-r from-white to-amber-200 bg-clip-text text-transparent">
               {BRAND.company}
             </span>
           </div>
-          
+
           <nav className="hidden md:flex items-center gap-8 text-sm">
             {links.map((l) => (
               <a
@@ -181,7 +181,7 @@ function Navbar({ mobileOpen, setMobileOpen }) {
               </a>
             ))}
           </nav>
-          
+
           <div className="hidden md:flex items-center gap-3">
             <NavButton href="#properties" onClick={(e) => handleAnchorClick(e, "#properties")}>
               {BRAND.ctaSecondary}
@@ -190,12 +190,16 @@ function Navbar({ mobileOpen, setMobileOpen }) {
               {BRAND.ctaPrimary} <ArrowRight className="ml-1 inline h-4 w-4" />
             </NavButton>
           </div>
-          
-          <button className="md:hidden p-2 rounded-xl hover:bg-white/10 transition-colors" onClick={() => setMobileOpen(!mobileOpen)}>
+
+          <button
+            className="md:hidden p-2 rounded-xl hover:bg-white/10 transition-colors"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
             {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
-        
+
         {mobileOpen && (
           <div className="md:hidden pb-4">
             <div className="flex flex-col gap-2">
@@ -223,28 +227,24 @@ function Navbar({ mobileOpen, setMobileOpen }) {
 function Hero() {
   return (
     <section className="relative overflow-hidden min-h-screen flex items-center">
-      {/* Background gradients */}
+      {/* background accents */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-amber-700/5" />
-        <div className="absolute top-20 -left-40 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 -right-40 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-20 -left-40 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 -right-40 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl" />
       </div>
 
       <Container>
         <div className="py-20 sm:py-24 lg:py-28 grid lg:grid-cols-2 gap-10 items-center">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.8 }}
-          >
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm px-4 py-2 text-xs text-slate-300">
-              <BadgeCheck className="h-3.5 w-3.5 text-amber-400" /> 
+              <BadgeCheck className="h-3.5 w-3.5 text-amber-400" />
               <span>Institutional diligence</span>
               <span className="h-1 w-1 rounded-full bg-white/30" />
               <span>Automated income</span>
               <Sparkles className="h-3.5 w-3.5 text-amber-400" />
             </div>
-            
+
             <h1 className="mt-6 text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight font-serif">
               <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
                 Buy into
@@ -258,26 +258,28 @@ function Hero() {
                 real estate
               </span>
             </h1>
-            
+
             <p className="mt-6 text-xl text-slate-300 max-w-xl leading-relaxed">{BRAND.subline}</p>
-            
+
             <div className="mt-8 flex flex-wrap gap-4">
-              <NavButton href="#contact" primary>{BRAND.ctaPrimary}</NavButton>
+              <NavButton href="#contact" primary>
+                {BRAND.ctaPrimary}
+              </NavButton>
               <NavButton href="#properties">{BRAND.ctaSecondary}</NavButton>
             </div>
-            
+
             <ul className="mt-8 grid grid-cols-2 gap-3 text-sm text-slate-300">
               {BRAND.valueBullets.map((b, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <div className="mt-1 p-1 rounded-full bg-gradient-to-r from-amber-400 to-amber-600">
+                  <span className="mt-1 p-1 rounded-full bg-gradient-to-r from-amber-400 to-amber-600">
                     <Check className="h-3 w-3 text-black" />
-                  </div>
+                  </span>
                   {b}
                 </li>
               ))}
             </ul>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -286,13 +288,11 @@ function Hero() {
           >
             <div className="aspect-[4/3] w-full rounded-3xl bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm border border-white/20 shadow-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-amber-600/5" />
-              <div className="absolute inset-4 rounded-2xl bg-gradient-to-br from-amber-400/20 to-transparent border border-amber-400/30 animate-pulse" />
+              <div className="absolute inset-4 rounded-2xl bg-gradient-to-br from-amber-400/20 to-transparent border border-amber-400/30" />
             </div>
-            
-            <div className="absolute -bottom-6 -left-6 hidden md:block h-28 w-28 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 backdrop-blur-sm border border-white/10 animate-float" />
-            <div className="absolute -top-6 -right-6 hidden md:block h-16 w-16 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 animate-float" />
-            
-            <div className="absolute -inset-4 bg-gradient-to-r from-amber-400/20 via-transparent to-amber-600/20 blur-2xl opacity-50" />
+
+            <div className="absolute -bottom-6 -left-6 hidden md:block h-28 w-28 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 backdrop-blur-sm border border-white/10" />
+            <div className="absolute -top-6 -right-6 hidden md:block h-16 w-16 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20" />
           </motion.div>
         </div>
       </Container>
@@ -324,7 +324,10 @@ function LogoBar() {
           <p className="text-xs uppercase tracking-wider text-slate-400 mb-8">As seen in</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 items-center">
             {["Fortune", "Forbes", "Bloomberg", "TechCrunch", "WSJ", "CNBC"].map((name) => (
-              <div key={name} className="text-center text-lg font-semibold text-slate-300 hover:text-white transition-all duration-300 cursor-pointer hover:scale-110">
+              <div
+                key={name}
+                className="text-center text-lg font-semibold text-slate-300 hover:text-white transition-all duration-300 cursor-pointer hover:scale-110"
+              >
                 {name}
               </div>
             ))}
@@ -341,15 +344,15 @@ function Stats() {
       <Container>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {BRAND.stats.map((s) => (
-            <div key={s.label} className="group rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm p-6 text-center hover:border-amber-400/30 transition-all duration-500 hover:scale-105 hover:-translate-y-2">
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+            <div
+              key={s.label}
+              className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm p-6 text-center transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:border-amber-400/30"
+            >
+              <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-400/10 to-amber-600/10 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100" />
               <div className="relative z-10">
                 <div className="text-3xl font-bold text-white font-serif">{s.value}</div>
                 <div className="mt-1 text-xs uppercase tracking-wider text-slate-400">{s.label}</div>
               </div>
-              
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-400/10 to-amber-600/10 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
             </div>
           ))}
         </div>
@@ -364,7 +367,6 @@ function PropertyShowcase() {
     { icon: Building2, title: "Lincoln Park • IL", tags: ["Long-term", "Urban core"], yield: "Projected 5.4% net" },
     { icon: Home, title: "Palm Grove • FL", tags: ["Vacation", "Beachfront"], yield: "Projected 6.8% net" },
   ];
-  
   return (
     <section id="properties" className="py-16 scroll-mt-24">
       <Container>
@@ -383,10 +385,10 @@ function PropertyShowcase() {
           {cards.map((c) => (
             <div
               key={c.title}
-              className="group rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm p-8 hover:border-amber-400/30 transition-all duration-500 hover:scale-105 hover:-translate-y-2"
+              className="relative group rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm p-8 transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:border-amber-400/30"
             >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+              <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-400/10 to-amber-600/10 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100" />
+
               <div className="relative z-10">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 flex items-center justify-center mb-6">
                   <c.icon className="h-6 w-6 text-amber-400" />
@@ -407,8 +409,6 @@ function PropertyShowcase() {
                   Learn more <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
-              
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-400/10 to-amber-600/10 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
             </div>
           ))}
         </div>
@@ -429,15 +429,11 @@ function HowItWorks() {
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {BRAND.howItWorks.map((s) => (
-            <div
-              key={s.step}
-              className="relative text-center group"
-            >
-              <div className="mx-auto w-16 h-16 mb-6 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-bold text-xl relative z-10">
+            <div key={s.step} className="text-center">
+              <div className="mx-auto w-16 h-16 mb-6 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-bold text-xl">
                 {s.step}
               </div>
-              
-              <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm p-6 hover:border-amber-400/30 transition-all duration-500 hover:scale-105">
+              <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm p-6 transition-all duration-500 hover:scale-105 hover:border-amber-400/30">
                 <div className="font-semibold text-white text-lg mb-2">{s.title}</div>
                 <div className="text-slate-300">{s.desc}</div>
               </div>
@@ -465,10 +461,9 @@ function FeatureGrid() {
           {BRAND.features.map((f, i) => (
             <div
               key={i}
-              className="relative group rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm p-8 hover:border-amber-400/30 transition-all duration-500 hover:scale-105 hover:-translate-y-2"
+              className="relative group rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm p-8 transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:border-amber-400/30"
             >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+              <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-400/10 to-amber-600/10 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100" />
               <div className="relative z-10">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 flex items-center justify-center mb-6">
                   <f.icon className="h-7 w-7 text-amber-400" />
@@ -482,8 +477,6 @@ function FeatureGrid() {
                   Learn more <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
-              
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-400/10 to-amber-600/10 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
             </div>
           ))}
         </div>
@@ -496,9 +489,8 @@ function TestimonialStrip() {
   return (
     <section className="py-16">
       <Container>
-        <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.03] backdrop-blur-sm text-white p-8 md:p-12 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-400/5 to-transparent" />
-          
+        <div className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.03] backdrop-blur-sm text-white p-8 md:p-12 overflow-hidden">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-400/5 to-transparent" />
           <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="max-w-2xl">
               <div className="flex gap-1 mb-4">
@@ -506,11 +498,9 @@ function TestimonialStrip() {
                   <Star key={i} className="h-5 w-5 text-amber-400 fill-current" />
                 ))}
               </div>
-              
               <p className="text-xl md:text-2xl font-semibold leading-snug font-serif mb-6">
-                "The experience is polished and effortless. Diversifying into real estate finally feels premium."
+                “The experience is polished and effortless. Diversifying into real estate finally feels premium.”
               </p>
-              
               <div className="flex items-center gap-3 text-sm text-slate-300">
                 <div className="h-12 w-12 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-bold">
                   AC
@@ -521,7 +511,6 @@ function TestimonialStrip() {
                 </div>
               </div>
             </div>
-            
             <NavButton href="#properties" primary>
               Explore properties <ArrowRight className="h-4 w-4 ml-1" />
             </NavButton>
@@ -546,7 +535,7 @@ function FAQ() {
           {BRAND.faqs.map((f, i) => (
             <div
               key={i}
-              className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm p-6 hover:border-amber-400/30 transition-all duration-500 hover:scale-105"
+              className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm p-6 transition-all duration-500 hover:scale-105 hover:border-amber-400/30"
             >
               <div className="font-medium text-white text-lg mb-3">{f.q}</div>
               <div className="text-slate-300">{f.a}</div>
@@ -567,7 +556,9 @@ function CTA() {
             <h2 className="text-4xl font-bold font-serif text-white mb-4">
               <span className="text-amber-400">{BRAND.ctaPrimary}</span> Today
             </h2>
-            <p className="text-xl text-slate-300 mb-8">Tell us a bit about your goals and we'll tailor a walkthrough.</p>
+            <p className="text-xl text-slate-300 mb-8">
+              Tell us a bit about your goals and we'll tailor a walkthrough.
+            </p>
             <div className="grid gap-3 text-sm text-slate-300">
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-amber-400" /> {BRAND.contactEmail}
@@ -580,6 +571,7 @@ function CTA() {
               </div>
             </div>
           </div>
+
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -601,6 +593,16 @@ Notes: ${data.get("notes")}`
                 <label className="text-sm text-slate-300">Your name</label>
                 <input
                   name="name"
+                  required
+                  className="mt-1 w-full rounded-xl border border-white/15 bg-white/5 backdrop-blur-sm px-3 py-2 text-slate-100 placeholder:text-slate-400 focus:border-amber-400/50 transition-colors"
+                  placeholder="Esther Goldman"
+                />
+              </div>
+              <div>
+                <label className="text-sm text-slate-300">Work email</label>
+                <input
+                  type="email"
+                  name="email"
                   required
                   className="mt-1 w-full rounded-xl border border-white/15 bg-white/5 backdrop-blur-sm px-3 py-2 text-slate-100 placeholder:text-slate-400 focus:border-amber-400/50 transition-colors"
                   placeholder="you@company.com"
@@ -667,11 +669,7 @@ function LuxFooter() {
             <h4 className="font-semibold text-white mb-4">Platform</h4>
             <div className="space-y-2">
               {["Properties", "How it works", "Pricing", "Security"].map((link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="block text-slate-400 hover:text-white transition-colors"
-                >
+                <a key={link} href="#" className="block text-slate-400 hover:text-white transition-colors">
                   {link}
                 </a>
               ))}
@@ -682,11 +680,7 @@ function LuxFooter() {
             <h4 className="font-semibold text-white mb-4">Support</h4>
             <div className="space-y-2">
               {["Help Center", "Contact", "Privacy", "Terms"].map((link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="block text-slate-400 hover:text-white transition-colors"
-                >
+                <a key={link} href="#" className="block text-slate-400 hover:text-white transition-colors">
                   {link}
                 </a>
               ))}
@@ -697,18 +691,12 @@ function LuxFooter() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-300 pb-8 border-t border-white/10 pt-8">
           <div>© {new Date().getFullYear()} {BRAND.company}. All rights reserved.</div>
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-white transition-colors">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              Terms
-            </a>
-            <a href="#contact" className="hover:text-white transition-colors">
-              Contact
-            </a>
+            <a href="#" className="hover:text-white transition-colors">Privacy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms</a>
+            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
           </div>
         </div>
-        
+
         <div className="text-xs leading-relaxed text-slate-500 pb-10">
           <p>
             <strong>Disclosures:</strong> Past performance is not indicative of future results. Investments are illiquid
@@ -719,14 +707,4 @@ function LuxFooter() {
       </Container>
     </footer>
   );
-} focus:border-amber-400/50 transition-colors"
-                  placeholder="Esther Goldman"
-                />
-              </div>
-              <div>
-                <label className="text-sm text-slate-300">Work email</label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  className="mt-1 w-full rounded-xl border border-white/15 bg-white/5 backdrop-blur-sm px-3 py-2 text-slate-100 placeholder:text-slate-400
+}
