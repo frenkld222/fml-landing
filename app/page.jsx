@@ -367,9 +367,11 @@ function PropertyShowcase() {
     { icon: Building2, title: "Lincoln Park • IL", tags: ["Long-term", "Urban core"], yield: "Projected 5.4% net" },
     { icon: Home, title: "Palm Grove • FL", tags: ["Vacation", "Beachfront"], yield: "Projected 6.8% net" },
   ];
+
   return (
     <section id="properties" className="py-16 scroll-mt-24">
       <Container>
+        {/* Header row */}
         <div className="flex items-end justify-between gap-6">
           <div>
             <h2 className="text-4xl font-bold font-serif mb-2">
@@ -379,9 +381,13 @@ function PropertyShowcase() {
               Explore offerings with full underwriting, fees, and risk disclosures. Yields are illustrative.
             </p>
           </div>
-          <NavButton href="#properties">View all</NavButton>
+          <NavButton href="#properties">
+            View all properties <ArrowRight className="ml-2 h-4 w-4" />
+          </NavButton>
         </div>
-        <div className="mt-8 grid md:grid-cols-3 gap-6">
+
+        {/* Cards */}
+        <div className="mt-8 grid md:grid-cols-3 gap-8">
           {cards.map((c) => (
             <div
               key={c.title}
